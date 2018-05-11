@@ -36,16 +36,36 @@ angular.module('myApp.view1', ['ngRoute'])
 
 
         $scope.editUser = function(userId, name, email) {
+            console.log('in editing....');
             
-            let editDialogConfig = {
+            $scope.editDialogConfig = {
                 title: "Edit User: " + name,
                 editing: true,
                 name: name,
                 email: email,
+                id: userId,
             };
             
             toggleEditingDialog(true);
         };
+
+
+        $scope.doEditing = function() {
+            let data = {
+                name: $scope.editDialogConfig.name,
+                email: $scope.editDialogConfig.email,
+            };
+
+            var url = baseUrl + "/" + $scope.editDialogConfig.id;
+
+            $http.patch(url, data).success(response => {
+                console.log("got successful response: " , response);
+            }).catch(err => {
+                console.log('bad patch..... error...', err);
+            });
+
+        };
+        
         
         function showConfirmationDialog(userId, name) {
             $scope.confirmationDialogConfig.message  = "Are you sure you want to delete the user: " + name + "?";
