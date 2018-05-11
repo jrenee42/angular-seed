@@ -15,7 +15,7 @@ angular.module('myApp.view1', ['ngRoute'])
 
 $http.get('http://localhost:3001/users')
         .success(function (response) {
-            console.log('got response....',response);
+            $scope.users = response;
         });
         
 
