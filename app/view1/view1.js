@@ -40,7 +40,9 @@ angular.module('myApp.view1', ['ngRoute'])
             }
         };
 
-        
+
+        // return true if the arrow for the direction and the column (noted by sortKey) should be shown;
+        // else false
         $scope.showArrow= function(direction, sortKey){
             if (direction){
                 //ascending
@@ -53,12 +55,10 @@ angular.module('myApp.view1', ['ngRoute'])
 
         
         $scope.cols = [
-
             { "display": "ID",
               "sortKey": "id"},
             { "display": "Name",
               "sortKey": "name"},
-
             { "display": "Email",
               "sortKey": "email"},
             { "display": "Actions"}];
@@ -71,7 +71,6 @@ angular.module('myApp.view1', ['ngRoute'])
         
         
         $scope.maybeDelete = function(id, name) {
-            console.log('would pop up a dialog here to deletion......', id);
             showConfirmationDialog(id, name);
         };
 
@@ -83,7 +82,6 @@ angular.module('myApp.view1', ['ngRoute'])
 
 
         $scope.showAddUserDialog = function() {
-            console.log('ack');
             
             $scope.editDialogConfig = {
                 title: "Add New User",
@@ -113,12 +111,12 @@ angular.module('myApp.view1', ['ngRoute'])
                 email: $scope.editDialogConfig.email,
             };
 
-            var url = baseUrl + "/" + $scope.editDialogConfig.id;
+            let url = baseUrl + "/" + $scope.editDialogConfig.id;
 
             $http.patch(url, data).success(response => {
                 console.log("got successful response: " , response);
 
-                //replace the old enttry with that new entry that was just returned:
+                //replace the old entry with that new entry that was just returned:
 
                 $scope.users = $scope.users.map(user => {
                     if (user.id === $scope.editDialogConfig.id) {
@@ -132,6 +130,7 @@ angular.module('myApp.view1', ['ngRoute'])
                 
             }).catch(err => {
                 console.log('bad patch..... error...', err);
+                //todo:  show message to user; then close dialog
             });
         };
 
@@ -153,6 +152,7 @@ angular.module('myApp.view1', ['ngRoute'])
                 
             }).catch(err => {
                 console.log('bad post..... error...', err);
+                //todo:  show message to user; then close dialog
             });
         };
         
@@ -178,12 +178,8 @@ angular.module('myApp.view1', ['ngRoute'])
                 
             }).catch(function(err){
                 console.log('error...', err);
+                //todo:  show message to user, then close dialog
             });
-        };
-
-        $scope.delete = function() {
-            console.log("Deleting...");
-            $scope.showDialog();
         };
 
         function dialogFactory(id) {
