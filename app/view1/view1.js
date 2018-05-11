@@ -21,12 +21,13 @@ angular.module('myApp.view1', ['ngRoute'])
             });
         
         
-        $scope.maybeDelete = function(id) {
+        $scope.maybeDelete = function(id, name) {
             console.log('would pop up a dialog here to deletion......', id);
             
             
             //first; just do it:
-            
+
+            showConfirmationDialog(name);
             
             $http.delete(baseUrl + "/" + id).success(function(resp){
                 console.log('deletion response: ', resp);
@@ -36,9 +37,6 @@ angular.module('myApp.view1', ['ngRoute'])
                    return user.id !== id;
                 });
 
-                //$scope.users = $scope.users.filter(function(user){
-                 //   return user.id !== 
-                
                 
             }).catch(function(err){
                 console.log('error...', err);
@@ -46,7 +44,36 @@ angular.module('myApp.view1', ['ngRoute'])
         };
 
 
+        //confirmation dialog:
+        $scope.confirmationDialogConfig = {
+            title: "Deletion Confirmation",
+            buttons: [{
+                label: "Delete",
+                action: "delete"
+            }]
+        };
+
+  
+        function showConfirmationDialog(name) {
+            $scope.confirmationDialogConfig.message  = "Are you sure you want to delete the user: " + name + "?";
+            $scope.showDialog(true);
+        };
 
 
+        $scope.executeDialogAction = function(action) {
+            if(typeof $scope[action] === "function") {
+    		    $scope[action]();
+    	    }
+        };
+
+
+        $scope.delete = function() {
+            console.log("Deleting...");
+            $scope.showDialog();
+        };
+
+        $scope.showDialog = function(flag) {
+            jQuery("#confirmation-dialog .modal").modal(flag ? 'show' : 'hide');
+        };
         
     }]);

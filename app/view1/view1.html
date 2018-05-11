@@ -12,11 +12,31 @@
       <td>{{ user.id}}</td>
       <td>{{ user.name }}</td>
       <td>{{ user.email }}</td>
-      <td> <i ng-click="maybeDelete(user.id)" title='delete this user' class="fa fa-times"></i>
+      <td> <i ng-click="maybeDelete(user.id, user.name)" title='delete this user' class="fa fa-times"></i>
     </tr>
   </tbody>
 
 </table>
 
+
+ <div id="confirmation-dialog">
+      <div class="modal fade confirmation-dialog" role="dialog">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">{{confirmationDialogConfig.title}}</h4>
+            </div>
+            <div class="modal-body">
+              <div class="span5">{{confirmationDialogConfig.message}}</div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+              <button type="button" ng-repeat="button in confirmationDialogConfig.buttons" ng-click="executeDialogAction(button.action)" class="btn btn-primary">{{button.label}}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
 </div>
