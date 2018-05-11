@@ -2,18 +2,18 @@
 
 angular.module('myApp.view1', ['ngRoute'])
 
-.config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/view1', {
-    templateUrl: 'view1/view1.html',
-    controller: 'View1Ctrl'
-  });
-}])
+    .config(['$routeProvider', function($routeProvider) {
+        $routeProvider.when('/view1', {
+            templateUrl: 'view1/view1.html',
+            controller: 'View1Ctrl'
+        });
+    }])
 
     .controller('View1Ctrl', ['$scope', '$http',function($scope, $http) {
 
         //TODO:  /sortable headers (done)
         
-         //filter for searching
+        //filter for searching
         //validation:  name cannot be empty
         //email cannot be empty
         //email must be valid
@@ -26,9 +26,9 @@ angular.module('myApp.view1', ['ngRoute'])
         var toggleEditingDialog = dialogFactory("edit-dialog");
 
 
-          $scope.sortType     = 'id'; // set the default sort type
+        $scope.sortType     = 'id'; // set the default sort type
         $scope.sortReverse  = false;  // set the default sort order
-  
+        
         $scope.doSorting = function(colKey) {
             //if previous click was this col, then reverse the sorting
             //if previous click was NOT this col, then set reverse to false
@@ -54,13 +54,13 @@ angular.module('myApp.view1', ['ngRoute'])
         
         $scope.cols = [
 
-                    { "display": "ID",
-                      "sortKey": "id"},
-                    { "display": "Name",
-                      "sortKey": "name"},
+            { "display": "ID",
+              "sortKey": "id"},
+            { "display": "Name",
+              "sortKey": "name"},
 
-                    { "display": "Email",
-                      "sortKey": "email"},
+            { "display": "Email",
+              "sortKey": "email"},
             { "display": "Actions"}];
 
         
@@ -91,7 +91,7 @@ angular.module('myApp.view1', ['ngRoute'])
             
             toggleEditingDialog(true);
         };
-            
+        
 
         $scope.editUser = function(userId, name, email) {
 
@@ -171,7 +171,7 @@ angular.module('myApp.view1', ['ngRoute'])
                 //  can just remove the deleted element locally:
                 
                 $scope.users = $scope.users.filter(user => {
-                   return user.id !== userId;
+                    return user.id !== userId;
                 });
 
                 toggleConfirmationDialog();
@@ -188,7 +188,7 @@ angular.module('myApp.view1', ['ngRoute'])
 
         function dialogFactory(id) {
             var showFn = function(flag) {
-                 jQuery("#" + id + " .modal").modal(flag ? 'show' : 'hide');
+                jQuery("#" + id + " .modal").modal(flag ? 'show' : 'hide');
             };
             return showFn;
         }
@@ -196,28 +196,28 @@ angular.module('myApp.view1', ['ngRoute'])
         
     }])
 
-.controller('headerController', function($scope) {
-    //here for the showUp/showDown to have a place to be 'called' from; all done via isolate scope
-})
+    .controller('headerController', function($scope) {
+        //here for the showUp/showDown to have a place to be 'called' from; all done via isolate scope
+    })
 
     .directive('myHeader', function() {
-      //may need to change link if don't use view1..........
-    return {
-        restrict: 'E',
-        transclude: true,
-        scope: {
-            'showUp': '&',
-            'showDown': '&'
-        },
-        controller: 'headerController',
-        controllerAs: 'header',
-        bindToController: true,
-        template: '<a href="#!/view1">' +
-            '<ng-transclude> </ng-transclude> ' +
-            '<span ng-show="header.showUp()" class="fa fa-caret-up"></span> ' +
-            '<span ng-show="header.showDown()" class="fa fa-caret-down"></span> ' +
-            '</a>'
-    };
+        //may need to change link if don't use view1..........
+        return {
+            restrict: 'E',
+            transclude: true,
+            scope: {
+                'showUp': '&',
+                'showDown': '&'
+            },
+            controller: 'headerController',
+            controllerAs: 'header',
+            bindToController: true,
+            template: '<a href="#!/view1">' +
+                '<ng-transclude> </ng-transclude> ' +
+                '<span ng-show="header.showUp()" class="fa fa-caret-up"></span> ' +
+                '<span ng-show="header.showDown()" class="fa fa-caret-down"></span> ' +
+                '</a>'
+        };
     });
 
 
