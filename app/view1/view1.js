@@ -9,7 +9,14 @@ angular.module('myApp.view1', ['ngRoute'])
   });
 }])
 
-    .controller('View1Ctrl', ['$scope', function($scope) {
-        $scope.hello='hello from jill';
+    .controller('View1Ctrl', ['$scope', '$http',function($scope, $http) {
+        $scope.hello='hello from jill 2';
+
+
+$http.get('http://localhost:3001/users')
+        .success(function (response) {
+            console.log('got response....',response);
+        });
+        
 
 }]);
