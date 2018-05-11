@@ -28,3 +28,7 @@
 .userList  i.fa-times {
     color:red;
 }
+
+.userList i.fa-times:hover {
+    color:darkred;
+}
