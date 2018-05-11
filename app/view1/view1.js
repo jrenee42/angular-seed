@@ -23,40 +23,37 @@ angular.module('myApp.view1', ['ngRoute'])
         
         $scope.maybeDelete = function(id, name) {
             console.log('would pop up a dialog here to deletion......', id);
-            
-            
-            //first; just do it:
-
-            showConfirmationDialog(name);
-            
-            $http.delete(baseUrl + "/" + id).success(function(resp){
-                console.log('deletion response: ', resp);
-
-                //need to refresh the table:
-                $scope.users = $scope.users.filter(user => {
-                   return user.id !== id;
-                });
-
-                
-            }).catch(function(err){
-                console.log('error...', err);
-            });
+            showConfirmationDialog(id, name);
         };
 
 
         //confirmation dialog:
         $scope.confirmationDialogConfig = {
-            title: "Deletion Confirmation",
-            buttons: [{
-                label: "Delete",
-                action: "delete"
-            }]
+            title: "Deletion Confirmation"
         };
 
   
-        function showConfirmationDialog(name) {
+        function showConfirmationDialog(userId, name) {
             $scope.confirmationDialogConfig.message  = "Are you sure you want to delete the user: " + name + "?";
+            $scope.confirmationDialogConfig.userId = userId;
             $scope.showDialog(true);
+        };
+
+        $scope.doDeletion = function(userId){
+            $http.delete(baseUrl + "/" + userId).success(function(resp){
+                console.log('deletion response: ', resp);
+
+                //need to refresh the table:
+                $scope.users = $scope.users.filter(user => {
+                   return user.id !== userId;
+                });
+
+                $scope.showDialog();
+
+                
+            }).catch(function(err){
+                console.log('error...', err);
+            });
         };
 
 
