@@ -153,4 +153,30 @@ angular.module('myApp.view1', ['ngRoute'])
         }
         
         
-    }]);
+    }])
+
+.controller('headerController', function($scope) {
+    //here for the showUp/showDown to have a place to be 'called' from; all done via isolate scope
+})
+
+    .directive('myHeader', function() {
+    
+    return {
+        restrict: 'E',
+        transclude: true,
+        scope: {
+            'showUp': '&',
+            'showDown': '&'
+        },
+        controller: 'headerController',
+        controllerAs: 'header',
+        bindToController: true,
+        template: '<a href="#">' +
+            '<ng-transclude> </ng-transclude> ' +
+            '<span ng-show="header.showUp()" class="fa fa-caret-up"></span> ' +
+            '<span ng-show="header.showDown()" class="fa fa-caret-down"></span> ' +
+            '</a>'
+    };
+    });
+
+
