@@ -39,10 +39,19 @@ angular.module('myApp.view1', ['ngRoute'])
         };
 
 
+        $scope.showAddUserDialog = function() {
+            console.log('ack');
+            
+            $scope.editDialogConfig = {
+                title: "Add New User",
+            };
+            
+            toggleEditingDialog(true);
+        };
+            
 
         $scope.editUser = function(userId, name, email) {
-            console.log('in editing....');
-            
+
             $scope.editDialogConfig = {
                 title: "Edit User: " + name,
                 editing: true,
@@ -81,7 +90,27 @@ angular.module('myApp.view1', ['ngRoute'])
             }).catch(err => {
                 console.log('bad patch..... error...', err);
             });
+        };
 
+        
+        $scope.addNewUser = function() {
+            let data = {
+                name: $scope.editDialogConfig.name,
+                email: $scope.editDialogConfig.email,
+            };
+
+            $http.post(baseUrl, data).success(response => {
+                console.log("got successful response: " , response);
+
+                //add the new entry
+                $scope.users.push(response);
+
+                //close the dialog
+                toggleEditingDialog();
+                
+            }).catch(err => {
+                console.log('bad post..... error...', err);
+            });
         };
         
         
