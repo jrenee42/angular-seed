@@ -60,6 +60,19 @@ angular.module('myApp.view1', ['ngRoute'])
 
             $http.patch(url, data).success(response => {
                 console.log("got successful response: " , response);
+
+                //replace the old enttry with that new entry that was just returned:
+
+                $scope.users = $scope.users.map(user => {
+                    if (user.id === $scope.editDialogConfig.id) {
+                        return response;
+                    }
+                    return user;
+                });
+
+                //close the dialog
+                toggleEditingDialog();
+                
             }).catch(err => {
                 console.log('bad patch..... error...', err);
             });
