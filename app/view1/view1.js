@@ -13,7 +13,7 @@ angular.module('myApp.view1', ['ngRoute'])
         $scope.hello='hello from jill 2';
 
         var baseUrl = 'http://localhost:3001/users';
-
+        var toggleConfirmationDialog = dialogFactory("confirmation-dialog");
         
         $http.get(baseUrl)
             .success(function (response) {
@@ -36,20 +36,21 @@ angular.module('myApp.view1', ['ngRoute'])
         function showConfirmationDialog(userId, name) {
             $scope.confirmationDialogConfig.message  = "Are you sure you want to delete the user: " + name + "?";
             $scope.confirmationDialogConfig.userId = userId;
-            $scope.showDialog(true);
+            toggleConfirmationDialog(true);
         };
 
         $scope.doDeletion = function(userId){
             $http.delete(baseUrl + "/" + userId).success(function(resp){
-                console.log('deletion response: ', resp);
 
                 //need to refresh the table:
+                //  we know it's successful, so we don't have to requery the server,
+                //  can just remove the deleted element locally:
+                
                 $scope.users = $scope.users.filter(user => {
                    return user.id !== userId;
                 });
 
-                $scope.showDialog();
-
+                toggleConfirmationDialog();
                 
             }).catch(function(err){
                 console.log('error...', err);
@@ -69,8 +70,12 @@ angular.module('myApp.view1', ['ngRoute'])
             $scope.showDialog();
         };
 
-        $scope.showDialog = function(flag) {
-            jQuery("#confirmation-dialog .modal").modal(flag ? 'show' : 'hide');
-        };
+        function dialogFactory(id) {
+            var showFn = function(flag) {
+                 jQuery("#" + id + " .modal").modal(flag ? 'show' : 'hide');
+            };
+            return showFn;
+        }
+        
         
     }]);
