@@ -12,10 +12,12 @@ angular.module('myApp.view1', ['ngRoute'])
     .controller('View1Ctrl', ['$scope', '$http',function($scope, $http) {
 
         //TODO:  /sortable headers
-        //adding new user
-        //filter for searching
-        //spacing for action buttons
-        //better colors for pencil
+         //filter for searching
+        //validation:  name cannot be empty
+        //email cannot be empty
+        //email must be valid
+        //remove views/navbar
+        
 
         var baseUrl = 'http://localhost:3001/users';
         var toggleConfirmationDialog = dialogFactory("confirmation-dialog");
