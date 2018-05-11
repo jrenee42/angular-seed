@@ -39,6 +39,6 @@
     margin: 10px;
 }
 
-.confirmation-dialog {
+.confirmation-dialog, .edit-dialog {
     display: none;
 }

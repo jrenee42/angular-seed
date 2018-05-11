@@ -14,6 +14,7 @@ angular.module('myApp.view1', ['ngRoute'])
 
         var baseUrl = 'http://localhost:3001/users';
         var toggleConfirmationDialog = dialogFactory("confirmation-dialog");
+        var toggleEditingDialog = dialogFactory("edit-dialog");
         
         $http.get(baseUrl)
             .success(function (response) {
@@ -32,7 +33,20 @@ angular.module('myApp.view1', ['ngRoute'])
             title: "Deletion Confirmation"
         };
 
-  
+
+
+        $scope.editUser = function(userId, name, email) {
+            
+            let editDialogConfig = {
+                title: "Edit User: " + name,
+                editing: true,
+                name: name,
+                email: email,
+            };
+            
+            toggleEditingDialog(true);
+        };
+        
         function showConfirmationDialog(userId, name) {
             $scope.confirmationDialogConfig.message  = "Are you sure you want to delete the user: " + name + "?";
             $scope.confirmationDialogConfig.userId = userId;
@@ -56,14 +70,6 @@ angular.module('myApp.view1', ['ngRoute'])
                 console.log('error...', err);
             });
         };
-
-
-        $scope.executeDialogAction = function(action) {
-            if(typeof $scope[action] === "function") {
-    		    $scope[action]();
-    	    }
-        };
-
 
         $scope.delete = function() {
             console.log("Deleting...");
