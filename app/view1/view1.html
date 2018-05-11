@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container userList">
 <p>This is the partial for view 1.</p>
 
 {{hello}}
@@ -12,6 +12,7 @@
       <td>{{ user.id}}</td>
       <td>{{ user.name }}</td>
       <td>{{ user.email }}</td>
+      <td> <button ng-click="maybeDelete(user.id)" title='delete this user'><i class="fa fa-times"></i></button>
     </tr>
   </tbody>
 

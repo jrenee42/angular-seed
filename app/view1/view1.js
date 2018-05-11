@@ -17,6 +17,10 @@ $http.get('http://localhost:3001/users')
         .success(function (response) {
             $scope.users = response;
         });
-        
+
+
+        $scope.maybeDelete = function(id) {
+            console.log('would pop up a dialog here to deletion......', id);
+        };
 
 }]);
