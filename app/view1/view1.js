@@ -22,6 +22,45 @@ angular.module('myApp.view1', ['ngRoute'])
         var baseUrl = 'http://localhost:3001/users';
         var toggleConfirmationDialog = dialogFactory("confirmation-dialog");
         var toggleEditingDialog = dialogFactory("edit-dialog");
+
+
+          $scope.sortType     = 'id'; // set the default sort type
+        $scope.sortReverse  = false;  // set the default sort order
+  
+        $scope.doSorting = function(colKey) {
+            //if previous click was this col, then reverse the sorting
+            //if previous click was NOT this col, then set reverse to false
+            if ($scope.sortType === colKey) {
+                $scope.sortReverse = !$scope.sortReverse;
+            } else {
+                $scope.sortReverse = false;
+                $scope.sortType = colKey;
+            }
+        };
+
+        
+        $scope.showArrow= function(direction, sortKey){
+            if (direction){
+                //ascending
+                return   $scope.sortType === sortKey && !$scope.sortReverse;
+            } else {
+                //descending
+                return  $scope.sortType === sortKey && $scope.sortReverse;
+            }
+        };
+
+        
+        $scope.cols = [
+
+                    { "display": "ID",
+                      "sortKey": "id"},
+                    { "display": "Name",
+                      "sortKey": "name"},
+
+                    { "display": "Email",
+                      "sortKey": "email"},
+            { "display": "Actions"}];
+
         
         $http.get(baseUrl)
             .success(function (response) {
@@ -160,7 +199,7 @@ angular.module('myApp.view1', ['ngRoute'])
 })
 
     .directive('myHeader', function() {
-    
+      //may need to change link if don't use view1..........
     return {
         restrict: 'E',
         transclude: true,
@@ -171,7 +210,7 @@ angular.module('myApp.view1', ['ngRoute'])
         controller: 'headerController',
         controllerAs: 'header',
         bindToController: true,
-        template: '<a href="#">' +
+        template: '<a href="#!/view1">' +
             '<ng-transclude> </ng-transclude> ' +
             '<span ng-show="header.showUp()" class="fa fa-caret-up"></span> ' +
             '<span ng-show="header.showDown()" class="fa fa-caret-down"></span> ' +

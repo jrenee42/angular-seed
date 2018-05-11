@@ -8,8 +8,19 @@
 <table class='table table-bordered gray-table-striped'>
 
   <tbody>
+    <thead>
+      <tr>
+        <th ng-repeat="col in cols">
+          
+          <my-header ng-if="col.sortKey" ng-click="doSorting(col.sortKey)" show-up="showArrow(true, col.sortKey)"
+                     show-down="showArrow(false, col.sortKey)"> {{col.display}} </my-header>
+          <span ng-hide="col.sortKey"> {{col.display}} </span>
+        </th>
+      </tr>
+    </thead>
 
-    <tr ng-repeat="user in users">
+    
+    <tr ng-repeat="user in users | orderBy:sortType:sortReverse">
       <td>{{ user.id}}</td>
       <td>{{ user.name }}</td>
       <td>{{ user.email }}</td>
