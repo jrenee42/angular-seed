@@ -25,14 +25,37 @@
 }
 
 
-.userList  i.fa-times {
-    color:red;
+.userList .actionBtns i {
+  font-size: 1.25em;
 }
 
-.userList i.fa-times:hover {
+.userList  i.fa-times {
     color:darkred;
 }
 
+.userList i.fa-times:hover {
+    color:#ff0000;
+}
+
+
+.userList .actionBtns .fa-pencil {
+    color: #003b99;
+    margin-left: .5em;
+}
+
+.userList .actionBtns .fa-pencil:hover {
+    color: #3381ff;
+}
+
+
+.userList .actionBtns .fa-pencil {
+    color: #0058e6;
+    margin-left: .5em;
+}
+
+.userList .actionBtns .fa-pencil:hover {
+    color: #4d91ff;
+}
 
 .open-dialog {
     border-radius: 3px;
@@ -42,3 +65,8 @@
 .confirmation-dialog, .edit-dialog {
     display: none;
 }
+
+
+.gray-table-striped>tbody>tr:nth-child(odd)>td, .gray-table-striped>tbody>tr:nth-child(odd)>th {
+    background-color: #f2f2f2;   
+ }
