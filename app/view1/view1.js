@@ -11,12 +11,14 @@ angular.module('myApp.view1', ['ngRoute'])
 
     .controller('View1Ctrl', ['$scope', '$http',function($scope, $http) {
 
-        //TODO:  /sortable headers
+        //TODO:  /sortable headers (done)
+        
          //filter for searching
         //validation:  name cannot be empty
         //email cannot be empty
         //email must be valid
         //remove views/navbar
+        //style the headers
         
 
         var baseUrl = 'http://localhost:3001/users';
