@@ -85,7 +85,13 @@ angular.module('myApp.view1', ['ngRoute'])
             
             $scope.editDialogConfig = {
                 title: "Add New User",
+                name: "",
+                email: "",
+                editing: false,
             };
+
+            
+            $scope.userForm.$setPristine();
             
             toggleEditingDialog(true);
         };
