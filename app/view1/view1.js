@@ -105,10 +105,12 @@ angular.module('myApp.view1', ['ngRoute'])
         };
 
         $scope.maybeSubmit = function() {
-            if ($scope.editDialogConfig.editing){
-                $scope.doEditing();
-            } else {
-                $scope.addNewUser();
+            if ($scope.userForm.$valid) {
+                if ($scope.editDialogConfig.editing){
+                    $scope.doEditing();
+                } else {
+                    $scope.addNewUser();
+                }
             }
         };
 
