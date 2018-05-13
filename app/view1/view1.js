@@ -14,9 +14,9 @@ angular.module('myApp.view1', ['ngRoute'])
         //TODO:  /sortable headers (done)
         
         //filter for searching
-        //validation:  name cannot be empty
-        //email cannot be empty
-        //email must be valid
+        //validation:  name cannot be empty (done)
+        //email cannot be empty (done)
+        //email must be valid (done)
         //remove views/navbar
         //style the headers
         
@@ -80,6 +80,11 @@ angular.module('myApp.view1', ['ngRoute'])
             title: "Deletion Confirmation"
         };
 
+
+        $scope.setToDirty = function(whichField){
+            
+            $scope.userForm[whichField].$setDirty();
+        };
 
         $scope.showAddUserDialog = function() {
             
