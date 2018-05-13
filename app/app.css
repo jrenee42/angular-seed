@@ -69,4 +69,14 @@
 
 .gray-table-striped>tbody>tr:nth-child(odd)>td, .gray-table-striped>tbody>tr:nth-child(odd)>th {
     background-color: #f2f2f2;   
- }
+                                                }
+
+.myHeader {
+    text-align: center;
+    font-size: 2em;
+    font-weight: 700;
+}
+
+.addButton {
+    margin-bottom: .75em;
+}
