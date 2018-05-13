@@ -104,8 +104,17 @@ angular.module('myApp.view1', ['ngRoute'])
             toggleEditingDialog(true);
         };
 
+        $scope.maybeSubmit = function() {
+            if ($scope.editDialogConfig.editing){
+                $scope.doEditing();
+            } else {
+                $scope.addNewUser();
+            }
+        };
 
+        
         $scope.doEditing = function() {
+
             let data = {
                 name: $scope.editDialogConfig.name,
                 email: $scope.editDialogConfig.email,
@@ -214,6 +223,24 @@ angular.module('myApp.view1', ['ngRoute'])
                 '<span ng-show="header.showDown()" class="fa fa-caret-down"></span> ' +
                 '</a>'
         };
+    })
+
+    .directive('jrsEnter', function() {
+        return function(scope, element, attrs) {
+            element.bind("keydown keypress", function(event) {
+                if(event.which === 13) {
+                    scope.$apply(function(){
+                        scope.$eval(attrs.jrsEnter, {'event': event});
+                    });
+
+                    event.preventDefault();
+                }
+            });
+        };
     });
+
+
+
+
 
 
