@@ -126,8 +126,23 @@ angular.module('myApp.view1', ['ngRoute'])
         };
 
         
-        $scope.doEditing = function() {
+        $scope.doEditing = function(newUser) {
+            console.log('sigh');
+            if (!$scope.userForm.$valid) {
+                //need to set the fields to dirty; that is what matters in this form:
+                $scope.setToDirty('email');
+                $scope.setToDirty('fullname');
+                return;
+            }
+            if (newUser){
+                addNewUser();
+            } else {
+                editExistingUser();
+            }
+        };
 
+        function editExistingUser() {
+            
             let data = {
                 name: $scope.editDialogConfig.name,
                 email: $scope.editDialogConfig.email,
@@ -154,10 +169,12 @@ angular.module('myApp.view1', ['ngRoute'])
                 console.log('bad patch..... error...', err);
                 //todo:  show message to user; then close dialog
             });
-        };
+        }
+
 
         
-        $scope.addNewUser = function() {
+        function addNewUser() {
+            
             let data = {
                 name: $scope.editDialogConfig.name,
                 email: $scope.editDialogConfig.email,
@@ -176,7 +193,7 @@ angular.module('myApp.view1', ['ngRoute'])
                 console.log('bad post..... error...', err);
                 //todo:  show message to user; then close dialog
             });
-        };
+        }
         
         
         function showConfirmationDialog(userId, name) {

@@ -80,3 +80,7 @@
 .addButton {
     margin-bottom: .75em;
 }
+
+p.helpBlock {
+    margin-bottom: 2px !important;
+}
