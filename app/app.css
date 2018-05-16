@@ -81,6 +81,21 @@
     margin-bottom: .75em;
 }
 
+.addButton .my-input-group.input-group {
+    float:left;
+    margin-left:15px;
+}
+
+.addButton .my-input-group .input-group-addon {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+
+.addButton .pull-right {
+    margin-right:15px;
+}
+
 p.helpBlock {
     margin-bottom: 2px !important;
 }

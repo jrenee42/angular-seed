@@ -3,91 +3,93 @@
 <!--[if IE 7]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html lang="en" ng-app="myApp" class="no-js"> <!--<![endif]-->
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>My AngularJS App</title>
-  <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/normalize.css">
-  <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css">
-  <link rel="stylesheet" type="text/css" href="http://maxcdn.bootstrapcdn.com/bootswatch/3.2.0/sandstone/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>My AngularJS App</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/normalize.css">
+    <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css">
+    <link rel="stylesheet" type="text/css" href="http://maxcdn.bootstrapcdn.com/bootswatch/3.2.0/sandstone/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
 
-  <link rel="stylesheet" href="app.css">
-  <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
-</head>
-<body ng-app="myApp"  ng-controller="View1Ctrl">
-  <!--[if lt IE 7]>
-      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-  <![endif]-->
+    <link rel="stylesheet" href="app.css">
+    <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
+  </head>
+  <body ng-app="myApp"  ng-controller="View1Ctrl">
+    <!--[if lt IE 7]>
+        <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
 
-  <div class="container userList">
+    <div class="container userList">
 
-  <div class="myHeader">
+      <div class="myHeader">
 
-User Table
-  </div>
+        User Table
+      </div>
 
-    <div class="input-group">
-            <div class="input-group-addon"><i class="fa fa-search"></i></div>
-            <input type="text" class="form-control" placeholder="Search within results" ng-model="searchText">
-          </div>      
-<div class="pull-right addButton">
-  <button type="button" class="btn btn-success" ng-click="showAddUserDialog()">Add New User</button>
-</div>
+      <div class= "addButton row">
+        <div class="my-input-group input-group col-md-8">
+          <div class="input-group-addon"><i class="fa fa-search"></i></div>
+          <input type="text" class="form-control" placeholder="Search within results" ng-model="searchText">
+        </div>      
+        <div class=" pull-right">
+          <button type="button" class="btn btn-success" ng-click="showAddUserDialog()">Add New User</button>
+        </div>
+      </div>
 
-<table class='table table-bordered gray-table-striped'>
+      <table class='table table-bordered gray-table-striped'>
 
-  <tbody>
-    <thead>
-      <tr>
-        <th ng-repeat="col in cols">
+        <tbody>
+          <thead>
+            <tr>
+              <th ng-repeat="col in cols">
+                
+                <my-header ng-if="col.sortKey" ng-click="doSorting(col.sortKey)" show-up="showArrow(true, col.sortKey)"
+                           show-down="showArrow(false, col.sortKey)"> {{col.display}} </my-header>
+                <span ng-hide="col.sortKey"> {{col.display}} </span>
+              </th>
+            </tr>
+          </thead>
+
           
-          <my-header ng-if="col.sortKey" ng-click="doSorting(col.sortKey)" show-up="showArrow(true, col.sortKey)"
-                     show-down="showArrow(false, col.sortKey)"> {{col.display}} </my-header>
-          <span ng-hide="col.sortKey"> {{col.display}} </span>
-        </th>
-      </tr>
-    </thead>
+          <tr ng-repeat="user in users | orderBy:sortType:sortReverse | filter:searchText">
+            <td>{{ user.id}}</td>
+            <td>{{ user.name }}</td>
+            <td>{{ user.email }}</td>
+            <td class="actionBtns"> <i ng-click="maybeDelete(user.id, user.name)" title='delete the user: {{user.name}}' class="fa fa-times"></i>
+              <i ng-click="editUser(user.id, user.name, user.email)" title='edit the user: {{user.name}}' class="fa fa-pencil"></i>
+            </td>
+          </tr>
+        </tbody>
 
-    
-    <tr ng-repeat="user in users | orderBy:sortType:sortReverse | filter:searchText">
-      <td>{{ user.id}}</td>
-      <td>{{ user.name }}</td>
-      <td>{{ user.email }}</td>
-      <td class="actionBtns"> <i ng-click="maybeDelete(user.id, user.name)" title='delete the user: {{user.name}}' class="fa fa-times"></i>
-           <i ng-click="editUser(user.id, user.name, user.email)" title='edit the user: {{user.name}}' class="fa fa-pencil"></i>
-      </td>
-    </tr>
-  </tbody>
-
-</table>
+      </table>
 
 
- <div id="confirmation-dialog">
-      <div class="modal fade confirmation-dialog" role="dialog">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">{{confirmationDialogConfig.title}}</h4>
-            </div>
-            <div class="modal-body">
-              <div class="span5">{{confirmationDialogConfig.message}}</div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-              <button type="button" ng-click="doDeletion(confirmationDialogConfig.userId)" class="btn btn-danger">Delete</button>
+      <div id="confirmation-dialog">
+        <div class="modal fade confirmation-dialog" role="dialog">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title">{{confirmationDialogConfig.title}}</h4>
+              </div>
+              <div class="modal-body">
+                <div class="span5">{{confirmationDialogConfig.message}}</div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" ng-click="doDeletion(confirmationDialogConfig.userId)" class="btn btn-danger">Delete</button>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-</div> <!-- end confirmation dialog -->
+    </div> <!-- end confirmation dialog -->
 
 
- <div id="edit-dialog">
+    <div id="edit-dialog">
       <div class="modal fade edit-dialog" role="dialog">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -102,7 +104,7 @@ User Table
                     <input type="text" class="form-control" id="fullname" name="fullname" placeholder="Enter user's full name" ng-model="editDialogConfig.name"  jrs-enter="maybeSubmit()"
                            ng-blur="setToDirty('fullname')"
                            required>
-                     <p ng-show="userForm.fullname.$invalid && !userForm.fullname.$pristine" class="help-block">Full Name is required.</p>
+                    <p ng-show="userForm.fullname.$invalid && !userForm.fullname.$pristine" class="help-block">Full Name is required.</p>
                   </div>
                 </div>
                 <div class="form-group">
@@ -111,7 +113,7 @@ User Table
                     <input type="email" name="email" class="form-control" id="inputEmail3" placeholder="Email" ng-model="editDialogConfig.email" jrs-enter="maybeSubmit()"
                            ng-blur="setToDirty('email')"
                            required>
-                     <p ng-show="userForm.email.$invalid && !userForm.email.$pristine" class="help-block">Enter a valid email.</p>
+                    <p ng-show="userForm.email.$invalid && !userForm.email.$pristine" class="help-block">Enter a valid email.</p>
                   </div>
                 </div>
               </form>
@@ -125,24 +127,24 @@ User Table
         </div>
       </div>
     </div>
-  </div> <!-- end editing dialog -->
+</div> <!-- end editing dialog -->
 
 </div>
 
 
-  <!-- In production use:
-  <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
-  -->
-  <script src="bower_components/angular/angular.js"></script>
-  <script src="bower_components/angular-route/angular-route.js"></script>
-  <script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
-  <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-  
-  <script src="app.js"></script>
-  <script src="view1/view1.js"></script>
-  <script src="view2/view2.js"></script>
-  <script src="components/version/version.js"></script>
-  <script src="components/version/version-directive.js"></script>
-  <script src="components/version/interpolate-filter.js"></script>
+<!-- In production use:
+     <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
+     -->
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-route/angular-route.js"></script>
+<script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+<script src="app.js"></script>
+<script src="view1/view1.js"></script>
+<script src="view2/view2.js"></script>
+<script src="components/version/version.js"></script>
+<script src="components/version/version-directive.js"></script>
+<script src="components/version/interpolate-filter.js"></script>
 </body>
 </html>
