@@ -29,7 +29,11 @@
 
 User Table
   </div>
-  
+
+    <div class="input-group">
+            <div class="input-group-addon"><i class="fa fa-search"></i></div>
+            <input type="text" class="form-control" placeholder="Search within results" ng-model="searchText">
+          </div>      
 <div class="pull-right addButton">
   <button type="button" class="btn btn-success" ng-click="showAddUserDialog()">Add New User</button>
 </div>
@@ -49,7 +53,7 @@ User Table
     </thead>
 
     
-    <tr ng-repeat="user in users | orderBy:sortType:sortReverse">
+    <tr ng-repeat="user in users | orderBy:sortType:sortReverse | filter:searchText">
       <td>{{ user.id}}</td>
       <td>{{ user.name }}</td>
       <td>{{ user.email }}</td>
