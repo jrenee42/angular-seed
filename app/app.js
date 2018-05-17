@@ -6,18 +6,19 @@ var app = angular.module('myApp', []);
 app.controller('View1Ctrl', ['$scope', '$http',function($scope, $http) {
 
     //TODO:
-    //filter for searching
-    //style the headers
     //show error messages to the user
     
+    //style the headers
     //validation:  name cannot be empty (done)
     //email cannot be empty (done)
     //email must be valid (done)
     //remove views/navbar (done)
-
+    //filter for searching (done)
+    
     var baseUrl = 'http://localhost:3001/users';
     var toggleConfirmationDialog = dialogFactory("confirmation-dialog");
     var toggleEditingDialog = dialogFactory("edit-dialog");
+    var toggleMessageDialog = dialogFactory("message-dialog");
 
 
     $scope.sortType     = 'id'; // set the default sort type
@@ -75,11 +76,15 @@ app.controller('View1Ctrl', ['$scope', '$http',function($scope, $http) {
     };
 
 
-    $scope.setToDirty = function(whichField){
-        
+    $scope.setToDirty = function(whichField){        
         $scope.userForm[whichField].$setDirty();
     };
 
+    function showErrorMessage(title, message) {
+        $scope.msgDialogConfig = {title:title, msg: message};
+        toggleMessageDialog(true);
+    };
+    
     $scope.showAddUserDialog = function() {
         
         $scope.editDialogConfig = {
@@ -114,14 +119,13 @@ app.controller('View1Ctrl', ['$scope', '$http',function($scope, $http) {
             if ($scope.editDialogConfig.editing){
                 $scope.doEditing();
             } else {
-                $scope.addNewUser();
+                $scope.doEditing(true);
             }
         }
     };
 
     
     $scope.doEditing = function(newUser) {
-        console.log('sigh');
         if (!$scope.userForm.$valid) {
             //need to set the fields to dirty; that is what matters in this form:
             $scope.setToDirty('email');
@@ -161,7 +165,13 @@ app.controller('View1Ctrl', ['$scope', '$http',function($scope, $http) {
             
         }).catch(err => {
             console.log('bad patch..... error...', err);
-            //todo:  show message to user; then close dialog
+            // show message to user; then close dialog
+            let msg = "editing the user: " + name + " failed.";
+
+            //close the editing dialog, only one dialog can show at a time:
+            toggleEditingDialog();
+
+            showErrorMessage("Error: Editing Failed", msg);
         });
     }
 
@@ -185,7 +195,13 @@ app.controller('View1Ctrl', ['$scope', '$http',function($scope, $http) {
             
         }).catch(err => {
             console.log('bad post..... error...', err);
-            //todo:  show message to user; then close dialog
+            //show message to user; then close dialog
+            let msg  = "Unable to create the user " + data.name + " with email: " + data.email;
+
+            //close the dialog; only one can be open at once
+            toggleEditingDialog();
+
+            showErrorMessage("Error: User Creation Failed", msg);
         });
     }
     
@@ -193,10 +209,11 @@ app.controller('View1Ctrl', ['$scope', '$http',function($scope, $http) {
     function showConfirmationDialog(userId, name) {
         $scope.confirmationDialogConfig.message  = "Are you sure you want to delete the user: " + name + "?";
         $scope.confirmationDialogConfig.userId = userId;
+        $scope.confirmationDialogConfig.name = name;
         toggleConfirmationDialog(true);
     };
 
-    $scope.doDeletion = function(userId){
+    $scope.doDeletion = function(userId, name){
         $http.delete(baseUrl + "/" + userId).success(function(resp){
 
             //need to refresh the table:
@@ -211,7 +228,14 @@ app.controller('View1Ctrl', ['$scope', '$http',function($scope, $http) {
             
         }).catch(function(err){
             console.log('error...', err);
-            //todo:  show message to user, then close dialog
+            //show message to user, then close dialog
+
+            let msg = "Deletion of the user: " + name + " failed."; 
+            //close the deletion dialog, only one dialog can show at a time:
+            toggleConfirmationDialog();
+
+            showErrorMessage("Error: Deletion Failed", msg);
+            
         });
     };
 

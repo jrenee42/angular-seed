@@ -62,7 +62,7 @@
     margin: 10px;
 }
 
-.confirmation-dialog, .edit-dialog {
+.confirmation-dialog, .edit-dialog, .message-dialog {
     display: none;
 }
 
@@ -98,4 +98,8 @@
 
 p.helpBlock {
     margin-bottom: 2px !important;
+}
+
+th {
+    background: lightgray;
 }
