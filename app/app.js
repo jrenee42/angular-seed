@@ -115,12 +115,10 @@ app.controller('View1Ctrl', ['$scope', '$http',function($scope, $http) {
     };
 
     $scope.maybeSubmit = function() {
-        if ($scope.userForm.$valid) {
-            if ($scope.editDialogConfig.editing){
-                $scope.doEditing();
-            } else {
-                $scope.doEditing(true);
-            }
+        if ($scope.editDialogConfig.editing){
+            $scope.doEditing();
+        } else {
+            $scope.doEditing(true);
         }
     };
 
