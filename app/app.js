@@ -164,7 +164,7 @@ app.controller('View1Ctrl', ['$scope', '$http',function($scope, $http) {
         }).catch(err => {
             console.log('bad patch..... error...', err);
             // show message to user; then close dialog
-            let msg = "editing the user: " + name + " failed.";
+            let msg = "editing the user: " + data.name + " failed.";
 
             //close the editing dialog, only one dialog can show at a time:
             toggleEditingDialog();
